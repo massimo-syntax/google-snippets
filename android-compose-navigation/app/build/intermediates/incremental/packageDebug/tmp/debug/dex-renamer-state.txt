@@ -1,4 +1,4 @@
-#Fri May 22 20:37:46 CEST 2026
+#Sat May 23 21:36:47 CEST 2026
 base.0=/home/name/Desktop/google-snippets/android-compose-navigation/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/home/name/Desktop/google-snippets/android-compose-navigation/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.2=/home/name/Desktop/google-snippets/android-compose-navigation/app/build/intermediates/dex/debug/mergeProjectDexDebug/1/classes.dex
