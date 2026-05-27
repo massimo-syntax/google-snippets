@@ -15,6 +15,8 @@
  */
 package com.example.cupcake
 
+import android.content.Context
+import android.content.Intent
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -67,7 +69,7 @@ fun CupcakeAppBar(
     modifier: Modifier = Modifier
 ) {
     TopAppBar(
-        title = { Text(stringResource(id = R.string.app_name)) },
+        title = { Text(currentScreen.name) },
         colors = TopAppBarDefaults.mediumTopAppBarColors(
             containerColor = MaterialTheme.colorScheme.primaryContainer
         ),
@@ -153,12 +155,15 @@ fun CupcakeApp(
                 )
             }
             composable(route = CupcakeRoutes.Summary.name) {
+                val context = LocalContext.current
                 OrderSummaryScreen(
                     orderUiState = uiState,
                     onCancelButtonClicked = {
                         cancelOrderAndNavigateToStart(viewModel, navController)
                     },
-                    onSendButtonClicked = {subject: String, summary: String -> },
+                    onSendButtonClicked = { subject: String, summary: String ->
+                        shareOrder(context, subject = subject, summary = summary)
+                    },
                     modifier = Modifier.fillMaxHeight()
                 )
             }
@@ -173,3 +178,20 @@ private fun cancelOrderAndNavigateToStart(
     viewModel.resetOrder()
     navController.popBackStack(CupcakeRoutes.Start.name, inclusive = false)
 }
+
+private fun shareOrder(context: Context, subject: String, summary: String) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        putExtra(Intent.EXTRA_TEXT, summary)
+    }
+    context.startActivity(
+        Intent.createChooser(
+            intent,
+            context.getString(R.string.new_cupcake_order)
+        )
+    )
+
+
+}
+
